@@ -166,10 +166,6 @@
       "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddressName'))]",
       "FGNIC1IP": "10.0.1.4",
       "FGNIC2IP": "10.0.2.4",
-  
-      //"routeTable1Name": "[concat(parameters('FortiWebName'), '-', parameters('Subnet1Name'),'-routes-',uniquestring(deployment().name))]",
-      //"routeTable2Name": "[concat(parameters('FortiWebName'), '-', parameters('Subnet3Name'),'-routes-',uniquestring(deployment().name))]",
-  
       "network_NIC_fg11_Name": "[concat(parameters('FortiWebName'),'-Nic0-',uniquestring(deployment().name))]",
       "network_NIC_fg11_Id": "[resourceId('Microsoft.Network/networkInterfaces',variables('network_NIC_fg11_Name'))]",
       "network_NIC_fg12_Name": "[concat(parameters('FortiWebName'),'-Nic1-',uniquestring(deployment().name))]",
@@ -178,21 +174,7 @@
       "compute_AvailabilitySet_FG_Name": "[concat(parameters('FortiWebName'),'-AvailabilitySet-',uniquestring(deployment().name))]",
       "compute_AvailabilitySet_FG_Id": "[resourceId('Microsoft.Compute/availabilitySets', variables('compute_AvailabilitySet_FG_Name'))]",
   
-      /*"vmIPArray": "[split(parameters('Subnet2Prefix'),'.')]",
-      "vmIPArray2String": "[string(variables('vmIPArray')[3])]",
-      "vmIPArray2": "[split(variables('vmIPArray2String'),'/')]",
-      "newIPArray3": "[string(add(int(variables('vmIPArray2')[0]),1))]",
-      "newIPArray2": "[string(int(variables('vmIPArray')[2]))]",
-      "newIPArray1": "[string(int(variables('vmIPArray')[1]))]",
-      "newIPArray0": "[string(int(variables('vmIPArray')[0]))]",
-      "WebwayIP": "[concat(variables('newIPArray0'),'.',variables('newIPArray1'),'.',variables('newIPArray2'),'.',variables('newIPArray3'))]",*/
-  
-      //"routeTable1Id": "[resourceId('Microsoft.Network/routeTables',variables('routeTable1Name'))]",
-      //"routeTable2Id": "[resourceId('Microsoft.Network/routeTables',variables('routeTable2Name'))]",
-  
       "uniqueSAName": "[concat('testdrive', uniqueString(resourceGroup().id))]"
-  
-      //"customData": "[concat('config system global\n     set admin-sport 8443\n end\n config system interface\n     edit port1\n        set description ext\n        set allowaccess ping https ssh http fgfm\n     next\n     edit port2\n        set description int\n        set mode dhcp\n        set defaultgw disable\n     next\n end\nconfig router static\nedit 0\nset dst 168.63.129.16 255.255.255.255\nset device port2\n set Webway ', variables ('WebwayIP'), '\n next\nedit 0\nset dst ', parameters('vnetAddressPrefix'), '\nset device port2\n set Webway ', variables ('WebwayIP'), '\n next\n end\n')]"
     },
     "resources": [
       {
@@ -222,74 +204,12 @@
           "name": "Aligned"
         }
       },
-      /*{
-        "type": "Microsoft.Network/routeTables",
-        "name": "[variables('routeTable1Name')]",
-        "apiVersion": "2015-06-15",
-        "tags": {
-          "provider": "[toUpper(parameters('FortinetTags').provider)]"
-        },
-        "location": "[parameters('location')]",
-        "properties": {
-          "routes": [
-            {
-              "name": "[concat('to', '-', parameters('Subnet2Name'))]",
-              "properties": {
-                "addressPrefix": "[parameters('Subnet2Prefix')]",
-                "nextHopType": "VirtualAppliance",
-                "nextHopIpAddress": "[variables('FGNIC1IP')]"
-              }
-            },
-            {
-              "name": "[concat('to', '-', parameters('Subnet3Name'))]",
-              "properties": {
-                "addressPrefix": "[parameters('Subnet3Prefix')]",
-                "nextHopType": "VirtualAppliance",
-                "nextHopIpAddress": "[variables('FGNIC1IP')]"
-              }
-            }
-          ]
-        }
-      }
-      {
-        "type": "Microsoft.Network/routeTables",
-        "name": "[variables('routeTable2Name')]",
-        "tags": {
-          "provider": "[toUpper(parameters('FortinetTags').provider)]"
-        },
-        "apiVersion": "2015-06-15",
-        "location": "[parameters('location')]",
-        "properties": {
-          "routes": [
-            {
-              "name": "[concat('to', '-', parameters('Subnet1Name'))]",
-              "properties": {
-                "addressPrefix": "[parameters('Subnet1Prefix')]",
-                "nextHopType": "VirtualAppliance",
-                "nextHopIpAddress": "[variables('FGNIC2IP')]"
-              }
-            },
-            {
-              "name": "to-Internet",
-              "properties": {
-                "AddressPrefix": "0.0.0.0/0",
-                "nextHopType": "VirtualAppliance",
-                "nextHopIPAddress": "[variables('FGNIC2IP')]"
-              }
-            }
-          ]
-        }
-      },*/
       {
         "condition": "[equals(parameters('vnetNewOrExisting'), 'new')]",
         "type": "Microsoft.Network/virtualNetworks",
         "apiVersion": "2017-09-01",
         "name": "[parameters('vnetName')]",
         "location": "[parameters('location')]",
-        //"dependsOn": [
-         // "[variables('routeTable1Name')]",
-         // "[variables('routeTable2Name')]"
-        //],
         "properties": {
           "addressSpace": {
             "addressPrefixes": [
@@ -301,9 +221,6 @@
               "name": "[parameters('Subnet1Name')]",
               "properties": {
                 "addressPrefix": "[parameters('Subnet1Prefix')]"
-                //"routeTable": {
-                 // "id": "[variables('routeTable1Id')]"
-                //}
               }
             },
             {
@@ -316,9 +233,6 @@
               "name": "[parameters('Subnet3Name')]",
               "properties": {
                 "addressPrefix": "[parameters('Subnet3Prefix')]"
-                //"routeTable": {
-                //  "id": "[variables('routeTable2Id')]"
-                //}
               }
             }
           ]
