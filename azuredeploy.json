@@ -494,7 +494,7 @@
         }
       },
       {
-        "name": "Apache Web Server",
+        "name": "ApacheWebServer",
         "type": "Microsoft.Compute/virtualMachines",
         "apiVersion": "2018-06-01",
         "location": "[parameters('location')]",
