@@ -494,10 +494,15 @@
         }
       },
       {
-        "name": "Apache",
+        "name": "Apache Web Server",
         "type": "Microsoft.Compute/virtualMachines",
         "apiVersion": "2018-06-01",
         "location": "[parameters('location')]",
+        "plan": {
+          "name": "apache-ubuntu20-04",
+          "publisher": "cloud-infrastructure-services",
+          "product": "apache_ubuntu20-04"
+        },
         "dependsOn": [
           "ApacheNIC"
         ],
