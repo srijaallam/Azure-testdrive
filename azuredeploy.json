@@ -513,7 +513,7 @@
               }
             },
             "imageReference": {
-              "publisher": "Canonical",
+              "publisher": "cloud-infrastructure-services",
               "offer": "apache-ubuntu20-04",
               "sku": "apache-ubuntu20-04",
               "version": "latest"
