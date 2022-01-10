@@ -472,7 +472,7 @@
           "provider": "[toUpper(parameters('FortinetTags').provider)]"
         },
         "type": "Microsoft.Network/networkInterfaces",
-        "name": "UbuntuNIC",
+        "name": "ApacheNIC",
         "location": "[parameters('location')]",
         "dependsOn": [
           "[parameters('vnetName')]"
