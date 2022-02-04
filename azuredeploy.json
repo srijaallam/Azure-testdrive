@@ -32,7 +32,7 @@
       },
       "FortiWebImageSKU": {
         "type": "string",
-        "defaultValue": "fortinet_fw-vm",
+        "defaultValue": "fortinet_fw-vm_payg",
         "allowedValues": [
           "fortinet_fw-vm"
         ],
